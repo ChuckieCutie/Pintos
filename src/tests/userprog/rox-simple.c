@@ -5,12 +5,11 @@
 #include "tests/lib.h"
 #include "tests/main.h"
 
-void
-test_main (void) 
+void test_main (void)
 {
   int handle;
   char buffer[16];
-  
+
   CHECK ((handle = open ("rox-simple")) > 1, "open \"rox-simple\"");
   CHECK (read (handle, buffer, sizeof buffer) == (int) sizeof buffer,
          "read \"rox-simple\"");

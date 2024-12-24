@@ -1629,8 +1629,8 @@ For instance, consider this example:
 
     my $person1 = Person->new( name => 'Joe', ssn => '123-45-6789' );
     my $person2 = Person->new( name => 'Mary', ssn => '123-47-0000' );
-    my $person3 = Person->new( name => 'Pete', ssn => '999-45-2222' );
-    my $person4 = Person->new( name => 'Peggy', ssn => '123-45-9999' );
+    my $person3 = Person->new( name => 'Pete', ssn => '987-65-4322' );
+    my $person4 = Person->new( name => 'Peggy', ssn => '123-45-0000' );
     my $person5 = Person->new( name => 'Frank', ssn => '000-45-9999' );
 
 If you did this:

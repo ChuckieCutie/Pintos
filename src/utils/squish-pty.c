@@ -7,9 +7,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#if SYSV_STREAMS
+/*
 #include <stropts.h>
-#endif
+*/
 #include <sys/ioctl.h>
 #include <sys/stat.h>
 #include <sys/time.h>
@@ -285,16 +285,16 @@ main (int argc __attribute__ ((unused)), char *argv[])
   if (slave < 0)
     fail_io ("open \"%s\"", name);
 
-#if SYSV_STREAMS
   /* System V implementations need STREAMS configuration for the
      slave. */
+  /*
   if (isastream (slave))
     {
       if (ioctl (slave, I_PUSH, "ptem") < 0
           || ioctl (slave, I_PUSH, "ldterm") < 0)
         fail_io ("ioctl");
     }
-#endif
+  */
 
   /* Arrange to get notified when a child dies, by writing a byte
      to a pipe fd.  We really want to use pselect() and

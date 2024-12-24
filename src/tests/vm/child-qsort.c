@@ -9,8 +9,7 @@
 #include "tests/main.h"
 #include "tests/vm/qsort.h"
 
-int
-main (int argc UNUSED, char *argv[]) 
+int main (int argc UNUSED, char *argv[])
 {
   int handle;
   unsigned char buf[128 * 1024];
@@ -26,6 +25,6 @@ main (int argc UNUSED, char *argv[])
   seek (handle, 0);
   write (handle, buf, size);
   close (handle);
-  
+
   return 72;
 }

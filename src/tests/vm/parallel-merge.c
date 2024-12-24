@@ -11,16 +11,15 @@
 #include "tests/main.h"
 
 #define CHUNK_SIZE (128 * 1024)
-#define CHUNK_CNT 8                             /* Number of chunks. */
-#define DATA_SIZE (CHUNK_CNT * CHUNK_SIZE)      /* Buffer size. */
+#define CHUNK_CNT 8                        /* Number of chunks. */
+#define DATA_SIZE (CHUNK_CNT * CHUNK_SIZE) /* Buffer size. */
 
 unsigned char buf1[DATA_SIZE], buf2[DATA_SIZE];
 size_t histogram[256];
 
 /* Initialize buf1 with random data,
    then count the number of instances of each value within it. */
-static void
-init (void) 
+static void init (void)
 {
   struct arc4 arc4;
   size_t i;
@@ -35,13 +34,12 @@ init (void)
 
 /* Sort each chunk of buf1 using SUBPROCESS,
    which is expected to return EXIT_STATUS. */
-static void
-sort_chunks (const char *subprocess, int exit_status)
+static void sort_chunks (const char *subprocess, int exit_status)
 {
   pid_t children[CHUNK_CNT];
   size_t i;
 
-  for (i = 0; i < CHUNK_CNT; i++) 
+  for (i = 0; i < CHUNK_CNT; i++)
     {
       char fn[128];
       char cmd[128];
@@ -63,7 +61,7 @@ sort_chunks (const char *subprocess, int exit_status)
       quiet = false;
     }
 
-  for (i = 0; i < CHUNK_CNT; i++) 
+  for (i = 0; i < CHUNK_CNT; i++)
     {
       char fn[128];
       int handle;
@@ -81,8 +79,7 @@ sort_chunks (const char *subprocess, int exit_status)
 }
 
 /* Merge the sorted chunks in buf1 into a fully sorted buf2. */
-static void
-merge (void) 
+static void merge (void)
 {
   unsigned char *mp[CHUNK_CNT];
   size_t mp_left;
@@ -98,7 +95,7 @@ merge (void)
 
   /* Merge. */
   op = buf2;
-  while (mp_left > 0) 
+  while (mp_left > 0)
     {
       /* Find smallest value. */
       size_t min = 0;
@@ -111,13 +108,12 @@ merge (void)
 
       /* Advance merge pointer.
          Delete this chunk from the set if it's emptied. */
-      if ((++mp[min] - buf1) % CHUNK_SIZE == 0) 
+      if ((++mp[min] - buf1) % CHUNK_SIZE == 0)
         mp[min] = mp[--mp_left];
     }
 }
 
-static void
-verify (void) 
+static void verify (void)
 {
   size_t buf_idx;
   size_t hist_idx;
@@ -128,19 +124,18 @@ verify (void)
   for (hist_idx = 0; hist_idx < sizeof histogram / sizeof *histogram;
        hist_idx++)
     {
-      while (histogram[hist_idx]-- > 0) 
+      while (histogram[hist_idx]-- > 0)
         {
           if (buf2[buf_idx] != hist_idx)
             fail ("bad value %d in byte %zu", buf2[buf_idx], buf_idx);
           buf_idx++;
-        } 
+        }
     }
 
   msg ("success, buf_idx=%'zu", buf_idx);
 }
 
-void
-parallel_merge (const char *child_name, int exit_status)
+void parallel_merge (const char *child_name, int exit_status)
 {
   init ();
   sort_chunks (child_name, exit_status);

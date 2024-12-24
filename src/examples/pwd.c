@@ -1,5 +1,5 @@
 /* pwd.c
-   
+
    Prints the absolute name of the present working directory. */
 
 #include <syscall.h>
@@ -9,30 +9,28 @@
 
 static bool getcwd (char *cwd, size_t cwd_size);
 
-int
-main (void) 
+int main (void)
 {
   char cwd[128];
-  if (getcwd (cwd, sizeof cwd)) 
+  if (getcwd (cwd, sizeof cwd))
     {
       printf ("%s\n", cwd);
       return EXIT_SUCCESS;
     }
-  else 
+  else
     {
       printf ("error\n");
-      return EXIT_FAILURE; 
+      return EXIT_FAILURE;
     }
 }
-
+
 /* Stores the inode number for FILE_NAME in *INUM.
    Returns true if successful, false if the file could not be
    opened. */
-static bool
-get_inumber (const char *file_name, int *inum) 
+static bool get_inumber (const char *file_name, int *inum)
 {
   int fd = open (file_name);
-  if (fd >= 0) 
+  if (fd >= 0)
     {
       *inum = inumber (fd);
       close (fd);
@@ -48,12 +46,11 @@ get_inumber (const char *file_name, int *inum)
    characters, plus a null terminator, would overflow the buffer.
    (No null terminator is actually added or depended upon, but
    its space is accounted for.) */
-static bool
-prepend (const char *prefix,
-         char *dst, size_t *dst_len, size_t dst_size) 
+static bool prepend (const char *prefix, char *dst, size_t *dst_len,
+                     size_t dst_size)
 {
   size_t prefix_len = strlen (prefix);
-  if (prefix_len + *dst_len + 1 <= dst_size) 
+  if (prefix_len + *dst_len + 1 <= dst_size)
     {
       *dst_len += prefix_len;
       memcpy ((dst + dst_size) - *dst_len, prefix, prefix_len);
@@ -68,11 +65,10 @@ prepend (const char *prefix,
    Returns true if successful, false on error.  Errors include
    system errors, directory trees deeper than MAX_LEVEL levels,
    and insufficient space in CWD. */
-static bool
-getcwd (char *cwd, size_t cwd_size) 
+static bool getcwd (char *cwd, size_t cwd_size)
 {
-  size_t cwd_len = 0;   
-  
+  size_t cwd_len = 0;
+
 #define MAX_LEVEL 20
   char name[MAX_LEVEL * 3 + 1 + READDIR_MAX_LEN + 1];
   char *namep;
@@ -116,10 +112,10 @@ getcwd (char *cwd, size_t cwd_size)
       for (;;)
         {
           int test_inum;
-          if (!readdir (parent_fd, namep) || !get_inumber (name, &test_inum)) 
+          if (!readdir (parent_fd, namep) || !get_inumber (name, &test_inum))
             {
               close (parent_fd);
-              return false; 
+              return false;
             }
           if (test_inum == child_inum)
             break;
@@ -135,18 +131,18 @@ getcwd (char *cwd, size_t cwd_size)
     }
 
   /* Finalize CWD. */
-  if (cwd_len > 0) 
+  if (cwd_len > 0)
     {
       /* Move the string to the beginning of CWD,
          and null-terminate it. */
       memmove (cwd, (cwd + cwd_size) - cwd_len, cwd_len);
       cwd[cwd_len] = '\0';
     }
-  else 
+  else
     {
       /* Special case for the root. */
-      strlcpy (cwd, "/", cwd_size); 
+      strlcpy (cwd, "/", cwd_size);
     }
-  
+
   return true;
 }

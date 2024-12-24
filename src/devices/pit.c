@@ -8,8 +8,8 @@
    Refer to [8254] for details. */
 
 /* 8254 registers. */
-#define PIT_PORT_CONTROL          0x43                /* Control port. */
-#define PIT_PORT_COUNTER(CHANNEL) (0x40 + (CHANNEL))  /* Counter port. */
+#define PIT_PORT_CONTROL 0x43                        /* Control port. */
+#define PIT_PORT_COUNTER(CHANNEL) (0x40 + (CHANNEL)) /* Counter port. */
 
 /* PIT cycles per second. */
 #define PIT_HZ 1193180
@@ -42,8 +42,7 @@
      - Other modes are less useful.
 
    FREQUENCY is the number of periods per second, in Hz. */
-void
-pit_configure_channel (int channel, int mode, int frequency)
+void pit_configure_channel (int channel, int mode, int frequency)
 {
   uint16_t count;
   enum intr_level old_level;

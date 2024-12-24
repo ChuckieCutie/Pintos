@@ -1,5 +1,7 @@
 # -*- makefile -*-
 
+# WARNING: Only edit me in the src/ directory!  (not in build/!)
+
 SRCDIR = ../..
 
 all: kernel.bin loader.bin

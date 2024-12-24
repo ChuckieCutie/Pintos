@@ -175,6 +175,7 @@ sub compare_output {
 			&& !/^ cr2=.* error=.*/
 			&& !/^ eax=.* ebx=.* ecx=.* edx=.*/
 			&& !/^ esi=.* edi=.* esp=.* ebp=.*/
+			&& !/^There is no crying in Pintos!/
 			&& !/^ cs=.* ds=.* es=.* ss=.*/, @output);
     }
     die "unknown option " . (keys (%options))[0] . "\n" if %options;

@@ -5,8 +5,8 @@
 # functionality should work too, and it's easy to screw it up, thus
 # the equal weight placed on each.
 
-50%	tests/vm/Rubric.functionality
-15%	tests/vm/Rubric.robustness
-10%	tests/userprog/Rubric.functionality
-5%	tests/userprog/Rubric.robustness
-20%	tests/filesys/base/Rubric
+24%	tests/vm/Rubric.functionality
+8%	tests/vm/Rubric.robustness
+5%	tests/userprog/Rubric.functionality
+3%	tests/userprog/Rubric.robustness
+10%	tests/filesys/base/Rubric

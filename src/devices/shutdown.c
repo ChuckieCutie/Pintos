@@ -25,41 +25,35 @@ static void print_stats (void);
 /* Shuts down the machine in the way configured by
    shutdown_configure().  If the shutdown type is SHUTDOWN_NONE
    (which is the default), returns without doing anything. */
-void
-shutdown (void)
+void shutdown (void)
 {
   switch (how)
     {
-    case SHUTDOWN_POWER_OFF:
-      shutdown_power_off ();
-      break;
+      case SHUTDOWN_POWER_OFF:
+        shutdown_power_off ();
+        break;
 
-    case SHUTDOWN_REBOOT:
-      shutdown_reboot ();
-      break;
+      case SHUTDOWN_REBOOT:
+        shutdown_reboot ();
+        break;
 
-    default:
-      /* Nothing to do. */
-      break;
+      default:
+        /* Nothing to do. */
+        break;
     }
 }
 
 /* Sets TYPE as the way that machine will shut down when Pintos
    execution is complete. */
-void
-shutdown_configure (enum shutdown_type type)
-{
-  how = type;
-}
+void shutdown_configure (enum shutdown_type type) { how = type; }
 
 /* Reboots the machine via the keyboard controller. */
-void
-shutdown_reboot (void)
+void shutdown_reboot (void)
 {
   printf ("Rebooting...\n");
 
-    /* See [kbd] for details on how to program the keyboard
-     * controller. */
+  /* See [kbd] for details on how to program the keyboard
+   * controller. */
   for (;;)
     {
       int i;
@@ -84,8 +78,7 @@ shutdown_reboot (void)
 
 /* Powers down the machine we're running on,
    as long as we're running on Bochs or QEMU. */
-void
-shutdown_power_off (void)
+void shutdown_power_off (void)
 {
   const char s[] = "Shutdown";
   const char *p;
@@ -107,6 +100,7 @@ shutdown_power_off (void)
   for (p = s; *p != '\0'; p++)
     outb (0x8900, *p);
 
+  // ans 20170106
   /* For newer versions of qemu, you must run with -device
    * isa-debug-exit, which exits on any write to an IO port (by
    * default 0x501).  Qemu's exit code is double the value plus one,
@@ -117,16 +111,16 @@ shutdown_power_off (void)
   /* This will power off a VMware VM if "gui.exitOnCLIHLT = TRUE"
      is set in its configuration file.  (The "pintos" script does
      that automatically.)  */
-  asm volatile ("cli; hlt" : : : "memory");
+  asm volatile("cli; hlt" : : : "memory");
 
   /* None of those worked. */
   printf ("still running...\n");
-  for (;;);
+  for (;;)
+    ;
 }
 
 /* Print statistics about Pintos execution. */
-static void
-print_stats (void)
+static void print_stats (void)
 {
   timer_print_stats ();
   thread_print_stats ();

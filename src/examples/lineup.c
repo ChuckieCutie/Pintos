@@ -11,8 +11,7 @@
 #include <stdio.h>
 #include <syscall.h>
 
-int
-main (int argc, char *argv[])
+int main (int argc, char *argv[])
 {
   char buf[1024];
   int handle;
@@ -24,7 +23,7 @@ main (int argc, char *argv[])
   if (handle < 0)
     exit (2);
 
-  for (;;) 
+  for (;;)
     {
       int n, i;
 

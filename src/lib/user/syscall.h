@@ -8,7 +8,7 @@
 typedef int pid_t;
 #define PID_ERROR ((pid_t) -1)
 
-/* Map region identifier. */
+/* Map region identifier. Not needed in UTCS Pintos Projects */
 typedef int mapid_t;
 #define MAP_FAILED ((mapid_t) -1)
 
@@ -16,8 +16,8 @@ typedef int mapid_t;
 #define READDIR_MAX_LEN 14
 
 /* Typical return values from main() and arguments to exit(). */
-#define EXIT_SUCCESS 0          /* Successful execution. */
-#define EXIT_FAILURE 1          /* Unsuccessful execution. */
+#define EXIT_SUCCESS 0 /* Successful execution. */
+#define EXIT_FAILURE 1 /* Unsuccessful execution. */
 
 /* Projects 2 and later. */
 void halt (void) NO_RETURN;
@@ -33,10 +33,6 @@ int write (int fd, const void *buffer, unsigned length);
 void seek (int fd, unsigned position);
 unsigned tell (int fd);
 void close (int fd);
-
-/* Project 3 and optionally project 4. */
-mapid_t mmap (int fd, void *addr);
-void munmap (mapid_t);
 
 /* Project 4 only. */
 bool chdir (const char *dir);
